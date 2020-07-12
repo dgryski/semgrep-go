@@ -9,6 +9,9 @@ import "github.com/quasilyte/go-ruleguard/dsl/fluent"
 func unconvert(m fluent.Matcher) {
 	m.Match("int($x)").Where(m["x"].Type.Is("int")).Report("unnecessary conversion").Suggest("$x")
 
+	m.Match("float32($x)").Where(m["x"].Type.Is("float32")).Report("unnecessary conversion").Suggest("$x")
+	m.Match("float64($x)").Where(m["x"].Type.Is("float64")).Report("unnecessary conversion").Suggest("$x")
+
 	// m.Match("byte($x)").Where(m["x"].Type.Is("byte")).Report("unnecessary conversion").Suggest("$x")
 	// m.Match("rune($x)").Where(m["x"].Type.Is("rune")).Report("unnecessary conversion").Suggest("$x")
 	m.Match("bool($x)").Where(m["x"].Type.Is("bool")).Report("unnecessary conversion").Suggest("$x")
