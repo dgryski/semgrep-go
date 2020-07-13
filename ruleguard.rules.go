@@ -117,3 +117,11 @@ func errnoterror(m fluent.Matcher) {
 		Where(m["err"].Text == "err" && !m["err"].Type.Is("error")).
 		Report("err variable not error type")
 }
+
+// Identical if and else bodies
+func ifbodythenbody(m fluent.Matcher) {
+	m.Match("if $*_ { $body } else { $body }").
+		Report("identical if and else bodies")
+	m.Match("if $*_ { $body } else if $*_ { $body }").
+		Report("identical if and else bodies")
+}
