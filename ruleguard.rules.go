@@ -71,6 +71,7 @@ func wrongerr(m fluent.Matcher) {
 }
 
 // err but no an error
+// False positive: if err := recover(); err != nil { ... }
 func errnoterror(m fluent.Matcher) {
 	m.Match("if $*_, err := $x; $err != nil { $*_ }").
 		Where(m["err"].Text == "err" && !m["err"].Type.Is("error")).
