@@ -34,3 +34,18 @@ func timeeq(m fluent.Matcher) {
 	m.Match("$t0 == $t1").Where(m["t0"].Type.Is("time.Time")).Report("using == with time.Time")
 	m.Match("$t0 != $t1").Where(m["t0"].Type.Is("time.Time")).Report("using != with time.Time")
 }
+
+// Wrong err in error check
+func wrongerr(m fluent.Matcher) {
+	m.Match("if $*_, err := $*_; $err1 != nil { $*_ }").Where(m["err1"].Text != "err").Report("maybe wrong err in error check")
+	m.Match("if $*_, $err0 := $*_; err != nil { $*_ }").Where(m["err0"].Text != "err").Report("maybe wrong err in error check")
+
+	m.Match("if $*_, err = $*_; $err1 != nil { $*_ }").Where(m["err1"].Text != "err").Report("maybe wrong err in error check")
+	m.Match("if $*_, $err0 = $*_; err != nil { $*_ }").Where(m["err0"].Text != "err").Report("maybe wrong err in error check")
+
+	m.Match("if $*_, err := $*_; $err1 == nil { $*_ }").Where(m["err1"].Text != "err").Report("maybe wrong err in error check")
+	m.Match("if $*_, $err0 := $*_; err == nil { $*_ }").Where(m["err0"].Text != "err").Report("maybe wrong err in error check")
+
+	m.Match("if $*_, err = $*_; $err1 == nil { $*_ }").Where(m["err1"].Text != "err").Report("maybe wrong err in error check")
+	m.Match("if $*_, $err0 = $*_; err == nil { $*_ }").Where(m["err0"].Text != "err").Report("maybe wrong err in error check")
+}
