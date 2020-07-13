@@ -37,15 +37,35 @@ func timeeq(m fluent.Matcher) {
 
 // Wrong err in error check
 func wrongerr(m fluent.Matcher) {
-	m.Match("if $*_, err := $*_; $err1 != nil { $*_ }").Where(m["err1"].Text != "err").Report("maybe wrong err in error check")
-	m.Match("if $*_, $err0 := $*_; err != nil { $*_ }").Where(m["err0"].Text != "err").Report("maybe wrong err in error check")
+	m.Match("if $*_, $err0 := $*_; $err1 != nil { $*_ }").
+		Where(m["err0"].Text == "err" && m["err0"].Type.Is("error") && m["err1"].Text != "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
 
-	m.Match("if $*_, err = $*_; $err1 != nil { $*_ }").Where(m["err1"].Text != "err").Report("maybe wrong err in error check")
-	m.Match("if $*_, $err0 = $*_; err != nil { $*_ }").Where(m["err0"].Text != "err").Report("maybe wrong err in error check")
+	m.Match("if $*_, $err0 := $*_; $err1 != nil { $*_ }").
+		Where(m["err0"].Text != "err" && m["err0"].Type.Is("error") && m["err1"].Text == "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
 
-	m.Match("if $*_, err := $*_; $err1 == nil { $*_ }").Where(m["err1"].Text != "err").Report("maybe wrong err in error check")
-	m.Match("if $*_, $err0 := $*_; err == nil { $*_ }").Where(m["err0"].Text != "err").Report("maybe wrong err in error check")
+	m.Match("if $*_, $err0 = $*_; $err1 != nil { $*_ }").
+		Where(m["err0"].Text == "err" && m["err0"].Type.Is("error") && m["err1"].Text != "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
 
-	m.Match("if $*_, err = $*_; $err1 == nil { $*_ }").Where(m["err1"].Text != "err").Report("maybe wrong err in error check")
-	m.Match("if $*_, $err0 = $*_; err == nil { $*_ }").Where(m["err0"].Text != "err").Report("maybe wrong err in error check")
+	m.Match("if $*_, $err0 = $*_; $err1 != nil { $*_ }").
+		Where(m["err0"].Text != "err" && m["err0"].Type.Is("error") && m["err1"].Text == "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("if $*_, $err0 := $*_; $err1 == nil { $*_ }").
+		Where(m["err0"].Text == "err" && m["err0"].Type.Is("error") && m["err1"].Text != "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("if $*_, $err0 := $*_; $err1 == nil { $*_ }").
+		Where(m["err0"].Text != "err" && m["err0"].Type.Is("error") && m["err1"].Text == "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("if $*_, $err0 = $*_; $err1 == nil { $*_ }").
+		Where(m["err0"].Text == "err" && m["err0"].Type.Is("error") && m["err1"].Text != "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("if $*_, $err0 = $*_; $err1 == nil { $*_ }").
+		Where(m["err0"].Text != "err" && m["err0"].Type.Is("error") && m["err1"].Text == "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
 }
