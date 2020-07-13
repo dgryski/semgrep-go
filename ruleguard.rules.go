@@ -7,7 +7,6 @@ import "github.com/quasilyte/go-ruleguard/dsl/fluent"
 // This is a collection of rules for ruleguard: https://github.com/quasilyte/go-ruleguard
 
 // Remove extra conversions: mdempsky/unconvert
-// False positive: var v interface{} = float32(1.0)
 func unconvert(m fluent.Matcher) {
 	m.Match("int($x)").Where(m["x"].Type.Is("int") && !m["x"].Const).Report("unnecessary conversion").Suggest("$x")
 
