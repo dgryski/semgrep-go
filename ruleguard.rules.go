@@ -69,3 +69,18 @@ func wrongerr(m fluent.Matcher) {
 		Where(m["err0"].Text != "err" && m["err0"].Type.Is("error") && m["err1"].Text == "err" && m["err1"].Type.Is("error")).
 		Report("maybe wrong err in error check")
 }
+
+// err but no an error
+func errnoterror(m fluent.Matcher) {
+	m.Match("if $*_, err := $x; $err != nil { $*_ }").
+		Where(m["err"].Text == "err" && !m["err"].Type.Is("error")).
+		Report("err variable not error type")
+
+	m.Match("if $*_, err = $x; $err != nil { $*_ }").
+		Where(m["err"].Text == "err" && !m["err"].Type.Is("error")).
+		Report("err variable not error type")
+
+	m.Match("if $err != nil { $*_ }").
+		Where(m["err"].Text == "err" && !m["err"].Type.Is("error")).
+		Report("err variable not error type")
+}
