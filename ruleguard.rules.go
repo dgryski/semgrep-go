@@ -28,3 +28,10 @@ func unconvert(m fluent.Matcher) {
 	m.Match("uint32($x)").Where(m["x"].Type.Is("uint32") && !m["x"].Const).Report("unnecessary conversion").Suggest("$x")
 	m.Match("uint64($x)").Where(m["x"].Type.Is("uint64") && !m["x"].Const).Report("unnecessary conversion").Suggest("$x")
 }
+
+// Don't use == or != with time.Time
+// https://github.com/dominikh/go-tools/issues/47 : Wontfix
+func timeeq(m fluent.Matcher) {
+	m.Match("$t0 == $t1").Where(m["t0"].Type.Is("time.Time")).Report("using == with time.Time")
+	m.Match("$t0 != $t1").Where(m["t0"].Type.Is("time.Time")).Report("using != with time.Time")
+}
