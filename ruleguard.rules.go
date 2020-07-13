@@ -68,6 +68,38 @@ func wrongerr(m fluent.Matcher) {
 	m.Match("if $*_, $err0 = $*_; $err1 == nil { $*_ }").
 		Where(m["err0"].Text != "err" && m["err0"].Type.Is("error") && m["err1"].Text == "err" && m["err1"].Type.Is("error")).
 		Report("maybe wrong err in error check")
+
+	m.Match("$*_, $err0 := $*_; if $err1 != nil { $*_ }").
+		Where(m["err0"].Text == "err" && m["err0"].Type.Is("error") && m["err1"].Text != "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("$*_, $err0 := $*_; if $err1 != nil { $*_ }").
+		Where(m["err0"].Text != "err" && m["err0"].Type.Is("error") && m["err1"].Text == "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("$*_, $err0 := $*_; if $err1 == nil { $*_ }").
+		Where(m["err0"].Text == "err" && m["err0"].Type.Is("error") && m["err1"].Text != "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("$*_, $err0 := $*_; if $err1 == nil { $*_ }").
+		Where(m["err0"].Text != "err" && m["err0"].Type.Is("error") && m["err1"].Text == "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("$*_, $err0 = $*_; if $err1 != nil { $*_ }").
+		Where(m["err0"].Text == "err" && m["err0"].Type.Is("error") && m["err1"].Text != "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("$*_, $err0 = $*_; if $err1 != nil { $*_ }").
+		Where(m["err0"].Text != "err" && m["err0"].Type.Is("error") && m["err1"].Text == "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("$*_, $err0 = $*_; if $err1 == nil { $*_ }").
+		Where(m["err0"].Text == "err" && m["err0"].Type.Is("error") && m["err1"].Text != "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
+
+	m.Match("$*_, $err0 = $*_; if $err1 == nil { $*_ }").
+		Where(m["err0"].Text != "err" && m["err0"].Type.Is("error") && m["err1"].Text == "err" && m["err1"].Type.Is("error")).
+		Report("maybe wrong err in error check")
 }
 
 // err but no an error
