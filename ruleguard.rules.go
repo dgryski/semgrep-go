@@ -122,6 +122,109 @@ func errnoterror(m fluent.Matcher) {
 func ifbodythenbody(m fluent.Matcher) {
 	m.Match("if $*_ { $body } else { $body }").
 		Report("identical if and else bodies")
-	m.Match("if $*_ { $body } else if $*_ { $body }").
-		Report("identical if and else bodies")
+
+	// Lots of false positives.
+	// m.Match("if $*_ { $body } else if $*_ { $body }").
+	//	Report("identical if and else bodies")
+}
+
+// Odd inequality: A - B < 0 instead of !=
+// Too many false positives.
+/*
+func subtractnoteq(m fluent.Matcher) {
+	m.Match("$a - $b < 0").Report("consider $a != $b")
+	m.Match("$a - $b > 0").Report("consider $a != $b")
+	m.Match("0 < $a - $b").Report("consider $a != $b")
+	m.Match("0 > $a - $b").Report("consider $a != $b")
+}
+*/
+
+// Self-assignment
+func selfassign(m fluent.Matcher) {
+	m.Match("$x = $x").Report("useless self-assignment")
+}
+
+// Odd nested ifs
+func oddnestedif(m fluent.Matcher) {
+	m.Match("if $x { if $x { $*_ }; $*_ }",
+		"if $x == $y { if $x != $y {$*_ }; $*_ }",
+		"if $x != $y { if $x == $y {$*_ }; $*_ }",
+		"if $x { if !$x { $*_ }; $*_ }",
+		"if !$x { if $x { $*_ }; $*_ }").
+		Report("odd nested ifs")
+
+	m.Match("for $x { if $x { $*_ }; $*_ }",
+		"for $x == $y { if $x != $y {$*_ }; $*_ }",
+		"for $x != $y { if $x == $y {$*_ }; $*_ }",
+		"for $x { if !$x { $*_ }; $*_ }",
+		"for !$x { if $x { $*_ }; $*_ }").
+		Report("odd nested for/ifs")
+}
+
+// odd bitwise expressions
+func oddbitwise(m fluent.Matcher) {
+	m.Match("$x | $x",
+		"$x | ^$x",
+		"^$x | $x").
+		Report("odd bitwise OR")
+
+	m.Match("$x & $x",
+		"$x & ^$x",
+		"^$x & $x").
+		Report("odd bitwise AND")
+}
+
+// odd sequence of if tests with return
+func ifreturn(m fluent.Matcher) {
+	m.Match("if $x { return $*_ }; if $x {$*_ }").Report("odd sequence of if test")
+	m.Match("if !$x { return $*_ }; if $x {$*_ }").Report("odd sequence of if test")
+	m.Match("if $x == $y { return $*_ }; if $x != $y {$*_ }").Report("odd sequence of if test")
+	m.Match("if $x != $y { return $*_ }; if $x == $y {$*_ }").Report("odd sequence of if test")
+
+}
+
+func oddifsequence(m fluent.Matcher) {
+	/*
+		m.Match("if $x { $*_ }; if $x {$*_ }").Report("odd sequence of if test")
+
+		m.Match("if $x == $y { $*_ }; if $y == $x {$*_ }").Report("odd sequence of if tests")
+		m.Match("if $x != $y { $*_ }; if $y != $x {$*_ }").Report("odd sequence of if tests")
+
+		m.Match("if $x < $y { $*_ }; if $y > $x {$*_ }").Report("odd sequence of if tests")
+		m.Match("if $x <= $y { $*_ }; if $y >= $x {$*_ }").Report("odd sequence of if tests")
+
+		m.Match("if $x > $y { $*_ }; if $y < $x {$*_ }").Report("odd sequence of if tests")
+		m.Match("if $x >= $y { $*_ }; if $y <= $x {$*_ }").Report("odd sequence of if tests")
+	*/
+}
+
+// odd sequence of nested if tests
+func nestedifsequence(m fluent.Matcher) {
+	/*
+		m.Match("if $x < $y { if $x >= $y {$*_ }; $*_ }").Report("odd sequence of nested if tests")
+		m.Match("if $x <= $y { if $x > $y {$*_ }; $*_ }").Report("odd sequence of nested if tests")
+		m.Match("if $x > $y { if $x <= $y {$*_ }; $*_ }").Report("odd sequence of nested if tests")
+		m.Match("if $x >= $y { if $x < $y {$*_ }; $*_ }").Report("odd sequence of nested if tests")
+	*/
+}
+
+// odd sequence of assignments
+func identicalassignments(m fluent.Matcher) {
+	m.Match("$x  = $y; $y = $x").Report("odd sequence of assignments")
+}
+
+func oddcompoundop(m fluent.Matcher) {
+	m.Match("$x += $x + $_",
+		"$x += $x - $_").
+		Report("odd += expression")
+
+	m.Match("$x -= $x + $_",
+		"$x -= $x - $_").
+		Report("odd -= expression")
+}
+
+func constswitch(m fluent.Matcher) {
+	m.Match("switch $x { $*_ }").
+		Where(m["x"].Const && !m["x"].Text.Matches(`^runtime\.`)).
+		Report("constant switch")
 }
