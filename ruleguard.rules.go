@@ -103,18 +103,28 @@ func wrongerr(m fluent.Matcher) {
 }
 
 // err but no an error
-// False positive: if err := recover(); err != nil { ... }
 func errnoterror(m fluent.Matcher) {
-	m.Match("if $*_, err := $x; $err != nil { $*_ }").
-		Where(m["err"].Text == "err" && !m["err"].Type.Is("error")).
-		Report("err variable not error type")
 
-	m.Match("if $*_, err = $x; $err != nil { $*_ }").
-		Where(m["err"].Text == "err" && !m["err"].Type.Is("error")).
-		Report("err variable not error type")
+	// Would be easier to check for all err identifiers instead, but then how do we get the type from m[] ?
 
-	m.Match("if $err != nil { $*_ }").
-		Where(m["err"].Text == "err" && !m["err"].Type.Is("error")).
+	m.Match(
+		"if $*_, err := $x; $err != nil { $*_ } else if $_ { $*_ }",
+		"if $*_, err := $x; $err != nil { $*_ } else { $*_ }",
+		"if $*_, err := $x; $err != nil { $*_ }",
+
+		"if $*_, err = $x; $err != nil { $*_ } else if $_ { $*_ }",
+		"if $*_, err = $x; $err != nil { $*_ } else { $*_ }",
+		"if $*_, err = $x; $err != nil { $*_ }",
+
+		"$*_, err := $x; if $err != nil { $*_ } else if $_ { $*_ }",
+		"$*_, err := $x; if $err != nil { $*_ } else { $*_ }",
+		"$*_, err := $x; if $err != nil { $*_ }",
+
+		"$*_, err = $x; if $err != nil { $*_ } else if $_ { $*_ }",
+		"$*_, err = $x; if $err != nil { $*_ } else { $*_ }",
+		"$*_, err = $x; if $err != nil { $*_ }",
+	).
+		Where(m["err"].Text == "err" && !m["err"].Type.Is("error") && m["x"].Text != "recover()").
 		Report("err variable not error type")
 }
 
