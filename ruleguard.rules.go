@@ -187,6 +187,7 @@ func oddbitwise(m fluent.Matcher) {
 // odd sequence of if tests with return
 func ifreturn(m fluent.Matcher) {
 	m.Match("if $x { return $*_ }; if $x {$*_ }").Report("odd sequence of if test")
+	m.Match("if $x { return $*_ }; if !$x {$*_ }").Report("odd sequence of if test")
 	m.Match("if !$x { return $*_ }; if $x {$*_ }").Report("odd sequence of if test")
 	m.Match("if $x == $y { return $*_ }; if $x != $y {$*_ }").Report("odd sequence of if test")
 	m.Match("if $x != $y { return $*_ }; if $x == $y {$*_ }").Report("odd sequence of if test")
