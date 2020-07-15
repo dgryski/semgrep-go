@@ -90,31 +90,6 @@ rules:
                           if $X == $Y { ... }
                           ...
                   }
-          - pattern: |
-                  for $X {
-                          if $X { ... }
-                          ...
-                  }
-          - pattern: |
-                  for $X {
-                          if ! $X { ... }
-                          ...
-                  }
-          - pattern: |
-                  for ! $X {
-                          if $X { ... }
-                          ...
-                  }
-          - pattern: |
-                  for $X == $Y {
-                          if $X != $Y { ... }
-                          ...
-                  }
-          - pattern: |
-                  for $X != $Y {
-                          if $X == $Y { ... }
-                          ...
-                  }
     message: "Odd sequence of ifs"
     languages: [go]
     severity: ERROR
