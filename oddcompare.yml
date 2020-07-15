@@ -1,0 +1,13 @@
+rules:
+  - id: odd-comparision
+    patterns:
+        - pattern-either:
+              - pattern: $X - $Y == 0
+              - pattern: $X - $Y != 0
+              - pattern: $X - $Y < 0
+              - pattern: $X - $Y <= 0
+              - pattern: $X - $Y > 0
+              - pattern: $X - $Y >= 0
+    message: "Odd comparision"
+    languages: [go]
+    severity: ERROR

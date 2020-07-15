@@ -239,3 +239,14 @@ func constswitch(m fluent.Matcher) {
 		Where(m["x"].Const && !m["x"].Text.Matches(`^runtime\.`)).
 		Report("constant switch")
 }
+
+func oddcomparisions(m fluent.Matcher) {
+	m.Match(
+		"$x - $y == 0",
+		"$x - $y != 0",
+		"$x - $y < 0",
+		"$x - $y <= 0",
+		"$x - $y > 0",
+		"$x - $y >= 0",
+	).Report("odd comparison")
+}
