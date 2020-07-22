@@ -252,3 +252,12 @@ func oddcomparisions(m fluent.Matcher) {
 		"$x ^ $y != 0",
 	).Report("odd comparison")
 }
+
+func oddmathbits(m fluent.Matcher) {
+	m.Match(
+		"64 - bits.LeadingZeros64($x)",
+		"32 - bits.LeadingZeros32($x)",
+		"16 - bits.LeadingZeros16($x)",
+		"8 - bits.LeadingZeros8($x)",
+	).Report("odd math/bits expression: use bits.Len*() instead?")
+}
