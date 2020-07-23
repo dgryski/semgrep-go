@@ -1,0 +1,17 @@
+rules:
+  - id: err-todo
+    patterns:
+        - pattern-either:
+                - pattern-inside: |
+                              if ... ; err != nil {
+                                      ...
+                              }
+                - pattern-inside: |
+                              if err != nil {
+                                      ...
+                              }
+        - pattern-regex: // ?(TODO|FIXME)
+
+    message: "TODO in error handling code"
+    languages: [go]
+    severity: ERROR
