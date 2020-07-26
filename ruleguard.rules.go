@@ -267,28 +267,14 @@ func floateq(m fluent.Matcher) {
 		"$x == $y",
 		"$x != $y",
 	).
-		Where(m["x"].Type.Is("float32") && !m["x"].Const).
+		Where(m["x"].Type.Is("float32") && !m["x"].Const && !m["y"].Text.Matches("0(.0+)?")).
 		Report("floating point tested for equality")
 
 	m.Match(
 		"$x == $y",
 		"$x != $y",
 	).
-		Where(m["x"].Type.Is("float64") && !m["x"].Const).
-		Report("floating point tested for equality")
-
-	m.Match(
-		"$x == $y",
-		"$x != $y",
-	).
-		Where(m["x"].Type.Is("float32") && !m["y"].Const).
-		Report("floating point tested for equality")
-
-	m.Match(
-		"$x == $y",
-		"$x != $y",
-	).
-		Where(m["x"].Type.Is("float64") && !m["y"].Const).
+		Where(m["x"].Type.Is("float64") && !m["x"].Const && !m["y"].Text.Matches("0(.0+)?")).
 		Report("floating point tested for equality")
 
 	m.Match("switch $x { $*_ }", "switch $*_; $x { $*_ }").
