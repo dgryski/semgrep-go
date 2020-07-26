@@ -235,7 +235,7 @@ func oddcompoundop(m fluent.Matcher) {
 }
 
 func constswitch(m fluent.Matcher) {
-	m.Match("switch $x { $*_ }").
+	m.Match("switch $x { $*_ }", "switch $*_; $x { $*_ }").
 		Where(m["x"].Const && !m["x"].Text.Matches(`^runtime\.`)).
 		Report("constant switch")
 }
