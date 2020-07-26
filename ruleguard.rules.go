@@ -261,3 +261,33 @@ func oddmathbits(m fluent.Matcher) {
 		"8 - bits.LeadingZeros8($x)",
 	).Report("odd math/bits expression: use bits.Len*() instead?")
 }
+
+func floateq(m fluent.Matcher) {
+	m.Match(
+		"$x == $y",
+		"$x != $y",
+	).
+		Where(m["x"].Type.Is("float32") && !m["x"].Const).
+		Report("floating point tested for equality")
+
+	m.Match(
+		"$x == $y",
+		"$x != $y",
+	).
+		Where(m["x"].Type.Is("float64") && !m["x"].Const).
+		Report("floating point tested for equality")
+
+	m.Match(
+		"$x == $y",
+		"$x != $y",
+	).
+		Where(m["x"].Type.Is("float32") && !m["y"].Const).
+		Report("floating point tested for equality")
+
+	m.Match(
+		"$x == $y",
+		"$x != $y",
+	).
+		Where(m["x"].Type.Is("float64") && !m["y"].Const).
+		Report("floating point tested for equality")
+}
