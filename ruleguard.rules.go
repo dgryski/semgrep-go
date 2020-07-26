@@ -290,4 +290,13 @@ func floateq(m fluent.Matcher) {
 	).
 		Where(m["x"].Type.Is("float64") && !m["y"].Const).
 		Report("floating point tested for equality")
+
+	m.Match("switch $x { $*_ }", "switch $*_; $x { $*_ }").
+		Where(m["x"].Type.Is("float32")).
+		Report("floating point as switch expression")
+
+	m.Match("switch $x { $*_ }", "switch $*_; $x { $*_ }").
+		Where(m["x"].Type.Is("float64")).
+		Report("floating point as switch expression")
+
 }
