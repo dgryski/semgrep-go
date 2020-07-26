@@ -286,3 +286,11 @@ func floateq(m fluent.Matcher) {
 		Report("floating point as switch expression")
 
 }
+
+func badexponent(m fluent.Matcher) {
+	m.Match(
+		"2 ^ $x",
+		"10 ^ $x",
+	).
+		Report("caret (^) is not exponentiation")
+}
