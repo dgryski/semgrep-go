@@ -182,6 +182,9 @@ func oddbitwise(m fluent.Matcher) {
 		"$x & ^$x",
 		"^$x & $x").
 		Report("odd bitwise AND")
+
+	m.Match("$x &^ $x").
+		Report("odd bitwise AND-NOT")
 }
 
 // odd sequence of if tests with return

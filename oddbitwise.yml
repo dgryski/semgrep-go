@@ -8,6 +8,7 @@ rules:
               - pattern: $X & $X
               - pattern: $X & ^$X
               - pattern: ^$X & $X
+              - pattern: $X &^ $X
     message: "Odd bitwise expression"
     languages: [go]
     severity: ERROR
