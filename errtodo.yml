@@ -2,15 +2,20 @@ rules:
   - id: err-todo
     patterns:
         - pattern-either:
-                - pattern-inside: |
-                              if ... ; err != nil {
-                                      ...
-                              }
-                - pattern-inside: |
+                - patterns:
+                        - pattern-inside:
                               if err != nil {
                                       ...
                               }
-        - pattern-regex: // ?(TODO|FIXME)
+                        - pattern-regex: // ?(TODO|FIXME).*
+
+        - pattern-either:
+                - patterns:
+                        - pattern-inside: |
+                                      if ... ; err != nil {
+                                              ...
+                                      }
+                        - pattern-regex: // ?(TODO|FIXME).*
 
     message: "TODO in error handling code"
     languages: [go]
