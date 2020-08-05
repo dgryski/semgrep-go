@@ -301,23 +301,13 @@ func badexponent(m fluent.Matcher) {
 func floatloop(m fluent.Matcher) {
 	m.Match(
 		"for $i := $x; $i < $y; $i += $z { $*_ }",
-	).
-		Where(m["i"].Type.Is("float64")).
-		Report("floating point for loop counter")
-
-	m.Match(
-		"for $i := $x; $i < $y; $i += $z { $*_ }",
-	).
-		Where(m["i"].Type.Is("float32")).
-		Report("floating point for loop counter")
-
-	m.Match(
 		"for $i = $x; $i < $y; $i += $z { $*_ }",
 	).
 		Where(m["i"].Type.Is("float64")).
 		Report("floating point for loop counter")
 
 	m.Match(
+		"for $i := $x; $i < $y; $i += $z { $*_ }",
 		"for $i = $x; $i < $y; $i += $z { $*_ }",
 	).
 		Where(m["i"].Type.Is("float32")).
