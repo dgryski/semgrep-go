@@ -313,3 +313,22 @@ func floatloop(m fluent.Matcher) {
 		Where(m["i"].Type.Is("float32")).
 		Report("floating point for loop counter")
 }
+
+func urlredacted(m fluent.Matcher) {
+
+	m.Match(
+		"log.Println($x, $*_)",
+		"log.Println($*_, $x, $*_)",
+		"log.Println($*_, $x)",
+		"log.Printf($*_, $x, $*_)",
+		"log.Printf($*_, $x)",
+
+		"log.Println($x, $*_)",
+		"log.Println($*_, $x, $*_)",
+		"log.Println($*_, $x)",
+		"log.Printf($*_, $x, $*_)",
+		"log.Printf($*_, $x)",
+	).
+		Where(m["x"].Type.Is("*url.URL")).
+		Report("consider $x.Redacted() when outputting URLs")
+}
