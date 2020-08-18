@@ -332,3 +332,10 @@ func urlredacted(m fluent.Matcher) {
 		Where(m["x"].Type.Is("*url.URL")).
 		Report("consider $x.Redacted() when outputting URLs")
 }
+
+func sprinterr(m fluent.Matcher) {
+	m.Match("fmt.Sprint($err)").
+		Where(m["err"].Type.Is("error")).
+		Report("maybe call $err.Error() instead of fmt.Sprint()?")
+
+}
