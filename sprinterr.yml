@@ -1,0 +1,12 @@
+rules:
+  - id: use-err-error
+    patterns:
+        - pattern-either:
+              - pattern: |
+                        if err != nil {
+                                ...
+                                <... fmt.Sprint(err) ...>
+                        }
+    message: "Use err.Error() instead"
+    languages: [go]
+    severity: ERROR
