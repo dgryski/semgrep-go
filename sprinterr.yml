@@ -7,6 +7,13 @@ rules:
                                 ...
                                 <... fmt.Sprint(err) ...>
                         }
+              - pattern: |
+                        if err == nil {
+                                ...
+                                return ...
+                        }
+                        ...
+                        <...  fmt.Sprint(err) ...>
     message: "Use err.Error() instead"
     languages: [go]
     severity: ERROR
