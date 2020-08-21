@@ -336,7 +336,10 @@ func urlredacted(m fluent.Matcher) {
 }
 
 func sprinterr(m fluent.Matcher) {
-	m.Match("fmt.Sprint($err)").
+	m.Match(`fmt.Sprint($err)`,
+		`fmt.Sprintf("%s", $err)`,
+		`fmt.Sprintf("%v", $err)`,
+	).
 		Where(m["err"].Type.Is("error")).
 		Report("maybe call $err.Error() instead of fmt.Sprint()?")
 
