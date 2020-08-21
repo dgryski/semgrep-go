@@ -26,7 +26,6 @@ rules:
                         - pattern-either:
                                 - pattern: $VAR = fmt.Sprintf("%s:%d", ..., ...)
                                 - pattern: $VAR = fmt.Sprintf("%s:%s", ..., ...)
-                                - pattern: $VAR = fmt.Sprintf("%s:%s", ..., ...)
                         - pattern-either:
                                 - metavariable-regex:
                                           metavariable: '$VAR'
