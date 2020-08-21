@@ -341,3 +341,11 @@ func sprinterr(m fluent.Matcher) {
 		Report("maybe call $err.Error() instead of fmt.Sprint()?")
 
 }
+
+func _(m fluent.Matcher) {
+	m.Match(
+		`for $_, $v := range $_ { $*_ }`,
+	).
+		Where(m["v"].Type.Size > 512).
+		Report(`loop copies large value each iteration`)
+}
