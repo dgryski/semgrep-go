@@ -342,7 +342,7 @@ func sprinterr(m fluent.Matcher) {
 
 }
 
-func _(m fluent.Matcher) {
+func largeloopcopy(m fluent.Matcher) {
 	m.Match(
 		`for $_, $v := range $_ { $*_ }`,
 	).
