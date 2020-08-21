@@ -352,3 +352,11 @@ func largeloopcopy(m fluent.Matcher) {
 		Where(m["v"].Type.Size > 512).
 		Report(`loop copies large value each iteration`)
 }
+
+func joinmpath(m fluent.Matcher) {
+	m.Match(
+		`strings.Join($_, "/")`,
+		`strings.Join($_, "\\")`,
+	).
+		Report(`did you mean path.Join() or filepath.Join() ?`)
+}

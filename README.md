@@ -25,6 +25,7 @@ I'll accept [comby](https://comby.dev) patterns if you can't get them to work wi
 * parseint-downcast: check for places a parsed 64-bit int is downcase to 32-bits
 * returnnil: check for odd nil-returns
 * sprinterr: check for fmt.Sprint(err) instead of err.Error()
+* joinpath: check for using strings.Join() to construct paths
 
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary convertions
@@ -50,6 +51,7 @@ Ruleguard checks are in ruleguard.rules.go.
 * urlredacted: check for logging urls without calling url.Redacted()
 * sprinterr: check for calling fmt.Sprint(err) instead of err.Error()
 * largeloopcopy: check for large value copies in loops
+* joinpath: check for using strings.Join() to construct paths
 _
 
 *Find this useful? [Buy me a coffee!](https://www.buymeacoffee.com/dgryski)*
