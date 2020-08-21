@@ -51,3 +51,5 @@ Ruleguard checks are in ruleguard.rules.go.
 * sprinterr: check for calling fmt.Sprint(err) instead of err.Error()
 * largeloopcopy: check for large value copies in loops
 _
+
+*Find this useful? [Buy me a coffee!](https://www.buymeacoffee.com/dgryski)*
