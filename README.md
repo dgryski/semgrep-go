@@ -11,6 +11,7 @@ The rules engines currently supported:
 I'll accept [comby](https://comby.dev) patterns if you can't get them to work with either semgrep or ruleguard.
 
 
+Semgrep checks:
 * badexponentiation: check for `2^x` and `10^x` which look like exponentiation
 * badnilguard: check for poorly formed nil guards
 * errtodo: check for TODOs in error handling code
