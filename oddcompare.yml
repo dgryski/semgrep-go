@@ -1,5 +1,5 @@
 rules:
-  - id: odd-comparision
+  - id: odd-comparison
     patterns:
         - pattern-either:
               - pattern: $X - $Y == 0
@@ -10,6 +10,6 @@ rules:
               - pattern: $X - $Y >= 0
               - pattern: $X ^ $Y == 0
               - pattern: $X ^ $Y != 0
-    message: "Odd comparision"
+    message: "Odd comparison"
     languages: [go]
     severity: ERROR

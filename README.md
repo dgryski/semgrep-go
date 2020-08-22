@@ -20,19 +20,19 @@ Semgrep checks:
 * mathbits: check for places you should use math/bits instead
 * mail-address: check for using fmt.Sprintf() instead of net/mail.Address.String()
 * oddbitwise: check for odd bit-wise expressions
-* oddcompare: check for odd comparisions
+* oddcompare: check for odd comparisons
 * oddcompound: check for odd compound += or -= expressions
 * oddifsequence: check for an odd sequence of ifs
 * oddmathbits: check for odd uses of math/bits
-* parseint-downcast: check for places a parsed 64-bit int is downcase to 32-bits
+* parseint-downcast: check for places a parsed 64-bit int is downcast to 32-bits
 * returnnil: check for odd nil-returns
 * sprinterr: check for fmt.Sprint(err) instead of err.Error()
 * joinpath: check for using strings.Join() to construct paths
 * readfull: check for extra length check for io.ReadFull()
 
 Ruleguard checks are in ruleguard.rules.go.
-* unconvert: check for unnecessary convertions
-* timeeq: check for using == and 1= with time.Time values
+* unconvert: check for unnecessary conversions
+* timeeq: check for using == and != with time.Time values
 * wrongerr: check for potentially checking the wrong error value
 * errnoterror: check for variables called `err` which are not the error type
 * ifbodythenbody: check for if statements with identical if and else bodies
@@ -44,11 +44,11 @@ Ruleguard checks are in ruleguard.rules.go.
 * oddifsequence: check for if sequences
 * nestedifsequence: check for odd nested if sequences
 * identicalassignments:  check for `x = y ; y = x` pairs.
-* oddcompoundop: check fo rodd compound operations
+* oddcompoundop: check for odd compound operations
 * constswitch: check for switch statements with expressions
-* oddcomparisions: check for odd comparisions
+* oddcomparisons: check for odd comparisons
 * oddmathbits: check for odd uses of math/bits
-* floateq: check for exact comparisions of floating point values
+* floateq: check for exact comparisons of floating point values
 * badexponent: check for `2^x` and `10^x` , which look like exponentiation
 * floatloop: check for using floats as loop counters
 * urlredacted: check for logging urls without calling url.Redacted()
