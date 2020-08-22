@@ -17,6 +17,7 @@ I'll accept [comby](https://comby.dev) patterns if you can't get them to work wi
 * hmac-bytes: check for using bytes.Equal() with HMACs
 * hostport: check for using fmt.Sprintf() instead of net.JoinHostPort()
 * mathbits: check for places you should use math/bits instead
+* mail-address: check for using fmt.Sprintf() instead of net/mail.Address.String()
 * oddbitwise: check for odd bit-wise expressions
 * oddcompare: check for odd comparisions
 * oddcompound: check for odd compound += or -= expressions
