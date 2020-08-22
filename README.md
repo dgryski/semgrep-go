@@ -29,6 +29,7 @@ Semgrep checks:
 * sprinterr: check for fmt.Sprint(err) instead of err.Error()
 * joinpath: check for using strings.Join() to construct paths
 * readfull: check for extra length check for io.ReadFull()
+* nilerr: returning a nil err instead of a nil value
 
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary conversions
@@ -56,6 +57,7 @@ Ruleguard checks are in ruleguard.rules.go.
 * largeloopcopy: check for large value copies in loops
 * joinpath: check for using strings.Join() to construct paths
 * readfull: check for extra length check for io.ReadFull()
+* nilerr: returning an nil error instead of a nil value
 _
 
 *Find this useful? [Buy me a coffee!](https://www.buymeacoffee.com/dgryski)*

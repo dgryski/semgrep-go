@@ -393,3 +393,12 @@ func readfull(m fluent.Matcher) {
 		 }`,
 	).Report("io.ReadFull() returns err == nil iff n == len(slice)")
 }
+
+func nilerr(m fluent.Matcher) {
+	m.Match(
+		`if err == nil { return err }`,
+		`if err == nil { return $*_, err }`,
+	).
+		Report(`return nil error instead of nil value`)
+
+}
