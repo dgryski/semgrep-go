@@ -3,12 +3,12 @@ rules:
     patterns:
         - pattern-either:
               - pattern: |
-                      $N, $ERR := io.ReadFull($R, $SLICE)
+                      $N, $ERR = io.ReadFull($R, $SLICE)
                       if $ERR != nil || $N != len($SLICE) {
                               ...
                       }
               - pattern: |
-                      $N, $ERR := io.ReadFull($R, $SLICE)
+                      $N, $ERR = io.ReadFull($R, $SLICE)
                       if $N != len($SLICE) || $ERR != nil {
                               ...
                       }
