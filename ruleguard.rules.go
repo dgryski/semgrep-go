@@ -402,3 +402,19 @@ func nilerr(m fluent.Matcher) {
 		Report(`return nil error instead of nil value`)
 
 }
+
+func mailaddress(m fluent.Matcher) {
+	m.Match(
+		"fmt.Sprintf(`\"%s\" <%s>`, $NAME, $EMAIL)",
+		"fmt.Sprintf(`\"%s\"<%s>`, $NAME, $EMAIL)",
+		"fmt.Sprintf(`%s <%s>`, $NAME, $EMAIL)",
+		"fmt.Sprintf(`%s<%s>`, $NAME, $EMAIL)",
+		`fmt.Sprintf("\"%s\"<%s>", $NAME, $EMAIL)`,
+		`fmt.Sprintf("\"%s\" <%s>", $NAME, $EMAIL)`,
+		`fmt.Sprintf("%s<%s>", $NAME, $EMAIL)`,
+		`fmt.Sprintf("%s <%s>", $NAME, $EMAIL)`,
+	).
+		Report("use net/mail Address.String() instead of fmt.Sprintf()").
+		Suggest("(&mail.Address{Name:$NAME, Address:$EMAIL}).String()")
+
+}
