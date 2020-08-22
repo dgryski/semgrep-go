@@ -357,6 +357,7 @@ func joinmpath(m fluent.Matcher) {
 	m.Match(
 		`strings.Join($_, "/")`,
 		`strings.Join($_, "\\")`,
+		"strings.Join($_, `\\`",
 	).
 		Report(`did you mean path.Join() or filepath.Join() ?`)
 }
