@@ -353,7 +353,7 @@ func largeloopcopy(m fluent.Matcher) {
 		Report(`loop copies large value each iteration`)
 }
 
-func joinmpath(m fluent.Matcher) {
+func joinpath(m fluent.Matcher) {
 	m.Match(
 		`strings.Join($_, "/")`,
 		`strings.Join($_, "\\")`,
