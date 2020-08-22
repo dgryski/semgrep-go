@@ -245,7 +245,7 @@ func constswitch(m fluent.Matcher) {
 		Report("constant switch")
 }
 
-func oddcomparisions(m fluent.Matcher) {
+func oddcomparisons(m fluent.Matcher) {
 	m.Match(
 		"$x - $y == 0",
 		"$x - $y != 0",
