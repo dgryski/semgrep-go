@@ -371,5 +371,13 @@ func readfull(m fluent.Matcher) {
                  if $n != len($slice) || $err != nil {
                               $*_
 		 }`,
+		`$n, $err = io.ReadFull($_, $slice)
+                 if $err != nil || $n != len($slice) {
+                              $*_
+		 }`,
+		`$n, $err = io.ReadFull($_, $slice)
+                 if $n != len($slice) || $err != nil {
+                              $*_
+		 }`,
 	).Report("io.ReadFull() returns err == nil iff n == len(slice)")
 }
