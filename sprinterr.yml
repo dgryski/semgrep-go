@@ -1,17 +1,18 @@
 rules:
   - id: use-err-error
     patterns:
+        - pattern-not: |
+                if err != nil {
+                        ..., err = ...
+                        <... fmt.Sprint(err) ...>
+                }
+        - pattern-not: |
+                if err != nil {
+                        err = ...
+                        <... fmt.Sprint(err) ...>
+                }
+
         - pattern-either:
-              - pattern-not: |
-                        if err != nil {
-                                ..., err = ...
-                                <... fmt.Sprint(err) ...>
-                        }
-              - pattern-not: |
-                        if err != nil {
-                                err = ...
-                                <... fmt.Sprint(err) ...>
-                        }
               - pattern: |
                         if err != nil {
                                 ...
