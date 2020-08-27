@@ -418,3 +418,13 @@ func mailaddress(m fluent.Matcher) {
 		Suggest("(&mail.Address{Name:$NAME, Address:$EMAIL}).String()")
 
 }
+
+func errnetclosed(m fluent.Matcher) {
+	m.Match(
+		`strings.Contains($err.Error(), $text)`,
+	).
+	Where(m["text"].Text.Matches("\".*closed network connection.*\"")).
+		Report(`String matching against error texts is fragile; use net.ErrClosed instead`).
+		Suggest(`errors.Is($err, net.ErrClosed)`)
+
+}
