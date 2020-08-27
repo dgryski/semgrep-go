@@ -30,6 +30,7 @@ Semgrep checks:
 * joinpath: check for using strings.Join() to construct paths
 * readfull: check for extra length check for io.ReadFull()
 * nilerr: returning a nil err instead of a nil value
+* errclosed: check for call strings.Contains() to detect net.ErrClosed
 
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary conversions
