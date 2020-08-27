@@ -59,6 +59,7 @@ Ruleguard checks are in ruleguard.rules.go.
 * joinpath: check for using strings.Join() to construct paths
 * readfull: check for extra length check for io.ReadFull()
 * nilerr: returning an nil error instead of a nil value
+* errnetclosed: check for call strings.Contains() to detect net.ErrClosed
 _
 
 *Find this useful? [Buy me a coffee!](https://www.buymeacoffee.com/dgryski)*
