@@ -423,8 +423,17 @@ func errnetclosed(m fluent.Matcher) {
 	m.Match(
 		`strings.Contains($err.Error(), $text)`,
 	).
-	Where(m["text"].Text.Matches("\".*closed network connection.*\"")).
+		Where(m["text"].Text.Matches("\".*closed network connection.*\"")).
 		Report(`String matching against error texts is fragile; use net.ErrClosed instead`).
 		Suggest(`errors.Is($err, net.ErrClosed)`)
 
+}
+
+func httpheaderadd(m fluent.Matcher) {
+	m.Match(
+		`$H.Add($KEY, $VALUE)`,
+	).
+		Where(m["H"].Type.Is("http.Header")).
+		Report("use http.Header.Set method instead of Add to overwrite all existing header values").
+		Suggest(`$H.Set($KEY, $VALUE)`)
 }
