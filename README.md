@@ -10,6 +10,24 @@ The rules engines currently supported:
 
 I'll accept [comby](https://comby.dev) patterns if you can't get them to work with either semgrep or ruleguard.
 
+To run a single semgrep rule:
+
+```
+$ semgrep -f path/to/semgrep-go/rule.yml .
+```
+
+To run all semgrep rules:
+
+```
+$ semgrep -f path/to/semgrep-go/ .
+```
+
+To run all the ruleguard rules:
+
+```
+$ ruleguard -c=0 -rules path/to/semgrep-go/rules.go
+```
+
 
 Semgrep checks:
 * badexponentiation: check for `2^x` and `10^x` which look like exponentiation
