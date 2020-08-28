@@ -437,3 +437,13 @@ func httpheaderadd(m fluent.Matcher) {
 		Report("use http.Header.Set method instead of Add to overwrite all existing header values").
 		Suggest(`$H.Set($KEY, $VALUE)`)
 }
+
+
+func hmacnew(m fluent.Matcher) {
+	m.Match("hmac.New(func() hash.Hash { return $x }, $_)",
+		`$f := func() hash.Hash { return $x }
+	$*_
+	hmac.New($f, $_)`,
+	).Where(m["x"].Pure).
+		Report("invalid hash passed to hmac.New()")
+}
