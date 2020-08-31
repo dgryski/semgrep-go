@@ -1,0 +1,15 @@
+rules:
+  - id: openfile-perms
+    patterns:
+      - pattern: os.OpenFile(..., 0644)
+    message: "umask is applied to perm; suggest 0666 instead"
+    languages: [go]
+    severity: ERROR
+  - id: mkdir-perms
+    patterns:
+      - pattern-either:
+        - pattern: os.Mkdir(..., 0755)
+        - pattern: os.MkdirAll(..., 0755)
+    message: "umask is applied to perm; suggest 0777 instead"
+    languages: [go]
+    severity: ERROR
