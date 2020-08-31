@@ -1,39 +1,39 @@
 # https://github.com/golang/go/issues/28308, from @stapelberg
-#rules:
-#  - id: sprintf-host-port
-#    patterns:
-#        - pattern-either:
-#                - patterns:
-#                        - pattern-either:
-#                                - pattern: fmt.Sprintf("%s:%d", $HOST, $PORT)
-#                                - pattern: fmt.Sprintf("%s:%s", $HOST, $PORT)
-#                        - pattern-either:
-#                                - metavariable-regex:
-#                                        metavariable: '$HOST'
-#                                        regex: '(?i).*(port|addr|host|listen|bind|ip)'
-#                                - metavariable-regex:
-#                                        metavariable: '$PORT'
-#                                        regex: '(?i).*(port|addr|host|listen|bind|ip)'
-#                - patterns:
-#                        - pattern: fmt.Sprintf($X, $HOST)
-#                        - metavariable-regex:
-#                                metavariable: '$HOST'
-#                                regex: '(?i).*(addr|host|listen|bind|ip)'
-#                        - metavariable-regex:
-#                                metavariable: '$X'
-#                                regex: '"%s:[0-9]+"'
-#
-#                - patterns:
-#                        - pattern-either:
-#                                - pattern: $VAR = fmt.Sprintf("%s:%d", ..., ...)
-#                                - pattern: $VAR = fmt.Sprintf("%s:%s", ..., ...)
-#                        - pattern-either:
-#                                - metavariable-regex:
-#                                          metavariable: '$VAR'
-#                                          regex: '(?i).*(port|addr|host|listen|bind)'
-#    message: "use net.JoinHostPort instead of fmt.Sprintf()"
-#    languages: [go]
-#    severity: ERROR
+rules:
+  - id: sprintf-host-port
+    patterns:
+        - pattern-either:
+                - patterns:
+                        - pattern-either:
+                                - pattern: fmt.Sprintf("%s:%d", $HOST, $PORT)
+                                - pattern: fmt.Sprintf("%s:%s", $HOST, $PORT)
+                        - pattern-either:
+                                - metavariable-regex:
+                                        metavariable: '$HOST'
+                                        regex: '(?i).*(port|addr|host|listen|bind|ip)'
+                                - metavariable-regex:
+                                        metavariable: '$PORT'
+                                        regex: '(?i).*(port|addr|host|listen|bind|ip)'
+                - patterns:
+                        - pattern: fmt.Sprintf($X, $HOST)
+                        - metavariable-regex:
+                                metavariable: '$HOST'
+                                regex: '(?i).*(addr|host|listen|bind|ip)'
+                        - metavariable-regex:
+                                metavariable: '$X'
+                                regex: '"%s:[0-9]+"'
+
+                - patterns:
+                        - pattern-either:
+                                - pattern: $VAR = fmt.Sprintf("%s:%d", ..., ...)
+                                - pattern: $VAR = fmt.Sprintf("%s:%s", ..., ...)
+                        - pattern-either:
+                                - metavariable-regex:
+                                          metavariable: '$VAR'
+                                          regex: '(?i).*(port|addr|host|listen|bind)'
+    message: "use net.JoinHostPort instead of fmt.Sprintf()"
+    languages: [go]
+    severity: ERROR
 
 
 
