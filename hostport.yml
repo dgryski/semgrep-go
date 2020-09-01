@@ -1,0 +1,25 @@
+# https://github.com/golang/go/issues/28308, from @stapelberg
+rules:
+- id: sprintf-host-port
+  pattern-either:
+    - patterns:
+        - pattern-either:
+          - pattern: fmt.Sprintf("...", $NET, $XX)
+          - pattern: fmt.Sprintf("...", $XX, $NET)
+          - pattern: $NET = fmt.Sprintf("...", ..., ...)
+        - metavariable-regex:
+            metavariable: '$NET'
+            regex: '(?i).*(port|addr|host|listen|bind|ip)'
+    - patterns:
+      - pattern: fmt.Sprintf($XX, $NET)
+      - metavariable-regex:
+          metavariable: '$XX'
+          regex: '"%s:%(d|s)"'
+      - metavariable-regex:
+          metavariable: '$NET'
+          regex: '(?i).*(port|addr|host|listen|bind|ip)'
+  message: |
+    use net.JoinHostPort instead of fmt.Sprintf($XX, $NET)
+  languages: [go]
+  severity: ERROR
+
