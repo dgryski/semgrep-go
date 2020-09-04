@@ -17,6 +17,19 @@ rules:
                         $W.Header().Set("Content-Type", "application/json")
                         ...
                         $ENC.Encode(...)
+                - pattern-not: |
+                        $W.Header().Add("Content-Type", "application/json")
+                        ...
+                        $ENC := json.NewEncoder($W)
+                        ...
+                        $ENC.Encode(...)
+                - pattern-not: |
+                        $W.Header().Set("Content-Type", "application/json")
+                        ...
+                        $ENC := json.NewEncoder($W)
+                        ...
+                        $ENC.Encode(...)
+
     message: "calling json.Encode() on an http.ResponseWriter will set Content-Type text/plain"
     languages: [go]
     severity: ERROR
