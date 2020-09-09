@@ -50,6 +50,7 @@ Semgrep checks:
 * nilerr: returning a nil err instead of a nil value
 * errclosed: check for call strings.Contains() to detect net.ErrClosed
 * hmac-hash: check for bad hash.New passed to hmac.New()
+* readeof: check for ignoring io.EOF as a successful read
 
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary conversions
@@ -81,6 +82,7 @@ Ruleguard checks are in ruleguard.rules.go.
 * errnetclosed: check for call strings.Contains() to detect net.ErrClosed
 * httpheaderadd: check for use of http.Header.Add method instead of Set
 * hmac-hash: check for bad hash.New passed to hmac.New()
+* readeof: check for ignoring io.EOF as a successful read
 _
 
 *Find this useful? [Buy me a coffee!](https://www.buymeacoffee.com/dgryski)*
