@@ -447,3 +447,16 @@ func hmacnew(m fluent.Matcher) {
 	).Where(m["x"].Pure).
 		Report("invalid hash passed to hmac.New()")
 }
+
+func readeof(m fluent.Matcher) {
+	m.Match(
+		`$n, $err = $r.Read($_)
+	if $err != nil {
+	    return $*_
+	}`,
+		`$n, $err := $r.Read($_)
+	if $err != nil {
+	    return $*_
+	}`).Where(m["r"].Type.Implements("io.Reader")).
+		Report("Read() can return n bytes and io.EOF")
+}
