@@ -17,19 +17,7 @@ rules:
                 - pattern-not: |
                         $H := $HASH.New()
                         ...
-                        $FUNC($H, ...)
-                        ...
-                        $H.Sum($SLICE)
-                - pattern-not: |
-                        $H := $HASH.New()
-                        ...
                         $FUNC(..., $H, ...)
-                        ...
-                        $H.Sum($SLICE)
-                - pattern-not: |
-                        $H := $HASH.New()
-                        ...
-                        $FUNC(..., $H)
                         ...
                         $H.Sum($SLICE)
     message: "odd hash.Sum call flow"
