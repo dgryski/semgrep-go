@@ -6,6 +6,6 @@ rules:
               - pattern: 32 - bits.LeadingZeros32($X)
               - pattern: 16 - bits.LeadingZeros16($X)
               - pattern: 8 - bits.LeadingZeros8($X)
-    message: "Odd bits.LeadingZeros() expression"
+    message: "Odd bits.LeadingZeros() expression should perhaps be bits.Len()"
     languages: [go]
     severity: ERROR
