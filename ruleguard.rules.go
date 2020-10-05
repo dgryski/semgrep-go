@@ -438,7 +438,6 @@ func httpheaderadd(m fluent.Matcher) {
 		Suggest(`$H.Set($KEY, $VALUE)`)
 }
 
-
 func hmacnew(m fluent.Matcher) {
 	m.Match("hmac.New(func() hash.Hash { return $x }, $_)",
 		`$f := func() hash.Hash { return $x }
@@ -459,4 +458,10 @@ func readeof(m fluent.Matcher) {
 	    return $*_
 	}`).Where(m["r"].Type.Implements("io.Reader")).
 		Report("Read() can return n bytes and io.EOF")
+}
+
+func writestring(m fluent.Matcher) {
+	m.Match(`io.WriteString($w, string($b))`).
+		Where(m["b"].Type.Is("[]byte")).
+		Report("use $w.Write($b)")
 }
