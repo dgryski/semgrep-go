@@ -463,5 +463,5 @@ func readeof(m fluent.Matcher) {
 func writestring(m fluent.Matcher) {
 	m.Match(`io.WriteString($w, string($b))`).
 		Where(m["b"].Type.Is("[]byte")).
-		Report("use $w.Write($b)")
+		Suggest("$w.Write($b)")
 }
