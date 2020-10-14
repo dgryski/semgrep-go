@@ -8,11 +8,11 @@ rules:
                 - pattern-not: |
                         $ENC := json.NewEncoder(($W: http.ResponseWriter))
                         ...
-                        $W.Header().Set("=~/Content-Type/i", "application/json")
+                        $W.Header().Set("=~/Content-Type/i", "=~/application/json/")
                         ...
                         $ENC.Encode(...)
                 - pattern-not-inside: |
-                        $W.Header().Set("=~/Content-Type/i", "application/json")
+                        $W.Header().Set("=~/Content-Type/i", "=~/application/json/")
                         ...
                         $ENC := json.NewEncoder($W)
                         ...
@@ -20,11 +20,11 @@ rules:
                 - pattern-not: |
                         $ENC := json.NewEncoder(($W: http.ResponseWriter))
                         ...
-                        $W.Header().Add("=~/Content-Type/i", "application/json")
+                        $W.Header().Add("=~/Content-Type/i", "=~/application/json/")
                         ...
                         $ENC.Encode(...)
                 - pattern-not-inside: |
-                        $W.Header().Add("=~/Content-Type/i", "application/json")
+                        $W.Header().Add("=~/Content-Type/i", "=~/application/json/")
                         ...
                         $ENC := json.NewEncoder($W)
                         ...
