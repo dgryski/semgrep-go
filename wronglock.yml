@@ -1,0 +1,13 @@
+rules:
+  - id: wrong-lock-unlock
+    patterns:
+        - pattern-either:
+              - pattern: |
+                  $M.Lock()
+                  defer $M.RUnlock()
+              - pattern: |
+                  $M.RLock()
+                  defer $M.Unlock()
+    message: "Wrong lock/unlock pair?"
+    languages: [go]
+    severity: ERROR

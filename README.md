@@ -52,6 +52,7 @@ Semgrep checks:
 * hmac-hash: check for bad hash.New passed to hmac.New()
 * readeof: check for ignoring io.EOF as a successful read
 * writestring: check for using io.WriteString(w, string(b))
+* wronglock: find incorrect lock/unlock pairs for rwmutex
 
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary conversions
@@ -85,6 +86,7 @@ Ruleguard checks are in ruleguard.rules.go.
 * hmac-hash: check for bad hash.New passed to hmac.New()
 * readeof: check for ignoring io.EOF as a successful read
 * writestring: check for using io.WriteString(w, string(b)) when b is []byte
+* badlock: find incorrect lock/unlock pairs for rwmutex
 _
 
 *Find this useful? [Buy me a coffee!](https://www.buymeacoffee.com/dgryski)*
