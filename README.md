@@ -53,6 +53,7 @@ Semgrep checks:
 * readeof: check for ignoring io.EOF as a successful read
 * writestring: check for using io.WriteString(w, string(b))
 * wronglock: find incorrect lock/unlock pairs for rwmutex
+* contexttodo: find context.TODO() usage and suggest to change it
 
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary conversions
@@ -87,6 +88,7 @@ Ruleguard checks are in ruleguard.rules.go.
 * readeof: check for ignoring io.EOF as a successful read
 * writestring: check for using io.WriteString(w, string(b)) when b is []byte
 * badlock: find incorrect lock/unlock pairs for rwmutex
+* contexttodo: find context.TODO() usage and suggest to change it
 _
 
 *Find this useful? [Buy me a coffee!](https://www.buymeacoffee.com/dgryski)*
