@@ -1,0 +1,12 @@
+rules:
+  - id: anonymous-struct-args
+    patterns:
+        - pattern-either:
+            - pattern: func $FUNC(..., $NAME *struct { ... }, ...)
+            - pattern: func $FUNC(..., $NAME struct { ... }, ...)
+            - pattern: func ($T $TYPE) $FUNC(..., $NAME *struct { ... }, ...)
+            - pattern: func ($T $TYPE) $FUNC(..., $NAME struct { ... }, ...)
+
+    message: "Odd use of anonymous structs for function arguments"
+    languages: [go]
+    severity: ERROR
