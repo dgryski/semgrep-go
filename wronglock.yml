@@ -8,6 +8,12 @@ rules:
               - pattern: |
                   $M.RLock()
                   defer $M.Unlock()
+              - pattern: |
+                  $M.Lock()
+                  defer $M.Lock()
+              - pattern: |
+                  $M.RLock()
+                  defer $M.RLock()
     message: "Wrong lock/unlock pair?"
     languages: [go]
     severity: ERROR
