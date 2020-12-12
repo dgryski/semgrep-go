@@ -1,0 +1,11 @@
+rules:
+  - id: os-error-handling-functions
+    patterns:
+            - pattern-either:
+                - pattern: os.IsExist(...)
+                - pattern: os.IsNotExist(...)
+                - pattern: os.IsPermission(...)
+                - pattern: os.IsTimeout(...)
+    message: "New code should use errors.Is with the appropriate error type"
+    languages: [go]
+    severity: ERROR
