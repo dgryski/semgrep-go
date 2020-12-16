@@ -491,3 +491,11 @@ func badlock(m fluent.Matcher) {
 func contextTODO(m fluent.Matcher) {
 	m.Match(`context.TODO()`).Report(`consider to use well-defined context`)
 }
+
+func wrongerrcall(m fluent.Matcher) {
+	m.Match(
+		`if $x.Err() != nil { return err }`,
+		`if $x.Err() != nil { return $*_, err }`,
+	).
+		Report(`maybe returning wrong error after Err() call`)
+}
