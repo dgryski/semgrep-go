@@ -58,7 +58,6 @@ Semgrep checks:
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary conversions
 * timeeq: check for using == and != with time.Time values
-* wrongerr: check for potentially checking the wrong error value
 * errnoterror: check for variables called `err` which are not the error type
 * ifbodythenbody: check for if statements with identical if and else bodies
 * subtractnoteq: check for x-y==0 instead of x==y
