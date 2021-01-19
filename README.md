@@ -82,7 +82,6 @@ Ruleguard checks are in ruleguard.rules.go.
 * readfull: check for extra length check for io.ReadFull()
 * nilerr: returning an nil error instead of a nil value
 * errnetclosed: check for call strings.Contains() to detect net.ErrClosed
-* httpheaderadd: check for use of http.Header.Add method instead of Set
 * hmac-hash: check for bad hash.New passed to hmac.New()
 * readeof: check for ignoring io.EOF as a successful read
 * writestring: check for using io.WriteString(w, string(b)) when b is []byte

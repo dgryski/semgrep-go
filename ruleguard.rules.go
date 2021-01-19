@@ -363,15 +363,6 @@ func errnetclosed(m dsl.Matcher) {
 
 }
 
-func httpheaderadd(m dsl.Matcher) {
-	m.Match(
-		`$H.Add($KEY, $VALUE)`,
-	).
-		Where(m["H"].Type.Is("http.Header")).
-		Report("use http.Header.Set method instead of Add to overwrite all existing header values").
-		Suggest(`$H.Set($KEY, $VALUE)`)
-}
-
 func hmacnew(m dsl.Matcher) {
 	m.Match("hmac.New(func() hash.Hash { return $x }, $_)",
 		`$f := func() hash.Hash { return $x }
