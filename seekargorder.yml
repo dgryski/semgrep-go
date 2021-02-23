@@ -1,0 +1,10 @@
+rules:
+  - id: seek-arg-order
+    patterns:
+        - pattern-either:
+            - pattern: $VAR.Seek(io.SeekCurrent, $POS)
+            - pattern: $VAR.Seek(io.SeekStart, $POS)
+            - pattern: $VAR.Seek(io.SeekEnd, $POS)
+    message: "Incorrect io.Seek argument order."
+    languages: [go]
+    severity: ERROR
