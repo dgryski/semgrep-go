@@ -54,6 +54,7 @@ Semgrep checks:
 * writestring: check for using io.WriteString(w, string(b))
 * wronglock: find incorrect lock/unlock pairs for rwmutex
 * contexttodo: find context.TODO() usage and suggest to change it
+* close-sql-query-rows: find places database/sql.Rows instance isn't Close()d
 
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary conversions
