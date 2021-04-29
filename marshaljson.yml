@@ -1,0 +1,9 @@
+rules:
+  - id: marshal-json-pointer-receiver
+    patterns:
+            - pattern-either:
+                - pattern: func ($T *$TYPE) MarshalJSON() ($DATA []byte, $ERR error)
+                - pattern: func ($T *$TYPE) MarshalJSON() ([]byte, error)
+    message: "MarshalJSON with a pointer receiver has surprising results: https://github.com/golang/go/issues/22967"
+    languages: [go]
+    severity: ERROR
