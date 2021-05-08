@@ -27,7 +27,9 @@ func unconvert(m dsl.Matcher) {
 	m.Match("uint32($x)").Where(m["x"].Type.Is("uint32") && !m["x"].Const).Report("unnecessary conversion").Suggest("$x")
 	m.Match("uint64($x)").Where(m["x"].Type.Is("uint64") && !m["x"].Const).Report("unnecessary conversion").Suggest("$x")
 
-	m.Match("time.Duration($x)").Where(m["x"].Type.Is("time.Duration") && !m["x"].Text.Matches("^[0-9]*$")).Report("unnecessary conversion").Suggest("$x")
+	m.Match("time.Duration($x)").Where(m["x"].Type.Is("time.Duration") &&
+		!m["x"].Node.Is("BasicLit") &&
+		!m["x"].Text.Matches("^[0-9_]*$")).Report("unnecessary conversion").Suggest("$x")
 }
 
 // Don't use == or != with time.Time
