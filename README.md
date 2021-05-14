@@ -55,6 +55,7 @@ Semgrep checks:
 * wronglock: find incorrect lock/unlock pairs for rwmutex
 * contexttodo: find context.TODO() usage and suggest to change it
 * close-sql-query-rows: find places database/sql.Rows instance isn't Close()d
+* unixnano: check for time.Time comparisons using UnixNano()
 
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary conversions
