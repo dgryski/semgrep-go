@@ -56,6 +56,7 @@ Semgrep checks:
 * contexttodo: find context.TODO() usage and suggest to change it
 * close-sql-query-rows: find places database/sql.Rows instance isn't Close()d
 * unixnano: check for time.Time comparisons using UnixNano()
+* timeafter: leaky use of time.After()
 
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary conversions

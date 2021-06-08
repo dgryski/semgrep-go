@@ -1,0 +1,16 @@
+rules:
+  - id: leaky-time-after
+    patterns:
+        - pattern-either:
+              - pattern: |
+                  for {
+                      ...
+                      select {
+                      case <- time.After(...):
+                          ...
+                      }
+                      ...
+                  }
+    message: "Leaky use of time.After in for-select"
+    languages: [go]
+    severity: ERROR
