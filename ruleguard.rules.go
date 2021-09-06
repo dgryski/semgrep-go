@@ -425,3 +425,76 @@ func wrongerrcall(m dsl.Matcher) {
 	).
 		Report(`maybe returning wrong error after Err() call`)
 }
+
+// ioutil.Discard => io.Discard
+func ioutilDiscard(m dsl.Matcher) {
+	m.Match(
+		`ioutil.Discard`,
+	).
+		Report(`As of Go 1.16, this value is simply io.Discard.`).
+		Suggest(`io.Discard`)
+}
+
+// ioutil.NopCloser => io.NopCloser
+func ioutilNopCloser(m dsl.Matcher) {
+	m.Match(
+		`ioutil.NopCloser($r)`,
+	).Where(m["r"].Type.Implements("io.Reader")).
+		Report(`As of Go 1.16, this function simply calls io.NopCloser.`).
+		Suggest(`io.NopCloser($r)`)
+}
+
+// ioutil.ReadAll => io.ReadAll
+func ioutilReadAll(m dsl.Matcher) {
+	m.Match(
+		`ioutil.ReadAll($r)`,
+	).Where(m["r"].Type.Implements("io.Reader")).
+		Report(`As of Go 1.16, this function simply calls io.ReadAll.`).
+		Suggest(`io.ReadAll($r)`)
+}
+
+// ioutil.ReadDir => os.ReadDir
+func ioutilReadDir(m dsl.Matcher) {
+	m.Match(
+		`ioutil.ReadDir($d)`,
+	).Where(m["d"].Type.Is("string")).
+		Report(`As of Go 1.16, os.ReadDir is a more efficient and correct choice: it returns a list of fs.DirEntry instead of fs.FileInfo, and it returns partial results in the case of an error midway through reading a directory.`).
+		Suggest(`os.ReadDir($d)`)
+}
+
+// ioutil.ReadFile => os.ReadFile
+func ioutilReadFile(m dsl.Matcher) {
+	m.Match(
+		`ioutil.ReadFile($f)`,
+	).Where(m["f"].Type.Is("string")).
+		Report(`As of Go 1.16, this function simply calls os.ReadFile.`).
+		Suggest(`os.ReadFile($f)`)
+}
+
+// ioutil.TempDir => os.MkdirTemp
+func ioutilTempDir(m dsl.Matcher) {
+	m.Match(
+		`ioutil.TempDir($d, $p)`,
+	).Where(m["d"].Type.Is("string") && m["p"].Type.Is("string")).
+		Report(`As of Go 1.17, this function simply calls os.MkdirTemp.`).
+		Suggest(`os.MkdirTemp($d, $p)`)
+}
+
+// ioutil.TempFile => os.CreateTemp
+func ioutilTempFile(m dsl.Matcher) {
+	m.Match(
+		`ioutil.TempFile($d, $p)`,
+	).Where(m["d"].Type.Is("string") && m["p"].Type.Is("string")).
+		Report(`As of Go 1.17, this function simply calls os.CreateTemp.`).
+		Suggest(`os.CreateTemp($r)`)
+}
+
+// ioutil.WriteFile => os.WriteFile
+func ioutilWriteFile(m dsl.Matcher) {
+	m.Import("io/fs")
+	m.Match(
+		`ioutil.WriteFile($f, $d, $p)`,
+	).Where(m["f"].Type.Is("string") && m["d"].Type.Is("[]byte") && m["p"].Type.Is("fs.FileMode")).
+		Report(`As of Go 1.16, this function simply calls os.WriteFile.`).
+		Suggest(`os.WriteFile($f, $d, $p)`)
+}
