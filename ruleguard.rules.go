@@ -486,7 +486,7 @@ func ioutilTempFile(m dsl.Matcher) {
 		`ioutil.TempFile($d, $p)`,
 	).Where(m["d"].Type.Is("string") && m["p"].Type.Is("string")).
 		Report(`As of Go 1.17, this function simply calls os.CreateTemp.`).
-		Suggest(`os.CreateTemp($r)`)
+		Suggest(`os.CreateTemp($d, $p)`)
 }
 
 // ioutil.WriteFile => os.WriteFile
