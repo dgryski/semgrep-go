@@ -1,0 +1,42 @@
+rules:
+- id: deprecated-ioutil-nopcloser
+  pattern: ioutil.NopCloser($R)
+  fix:  io.NopCloser($R)
+  message: ioutil.NopCloser is deprecated
+  languages: [go]
+  severity: ERROR
+- id: deprecated-ioutil-readall
+  pattern: ioutil.ReadAll($R)
+  fix: io.ReadAll($R)
+  message: ioutil.ReadAll is deprecated
+  languages: [go]
+  severity: ERROR
+- id: deprecated-ioutil-readdir
+  pattern: ioutil.ReadDir($D)
+  message: ioutil.ReadDir is deprecated
+  languages: [go]
+  severity: ERROR
+- id: deprecated-ioutil-readfile
+  pattern: ioutil.ReadFile($F)
+  fix: os.ReadFile($F)
+  message: ioutil.ReadFile is deprecated
+  languages: [go]
+  severity: ERROR
+- id: deprecated-ioutil-tempdir
+  pattern: ioutil.TempDir($D, $P)
+  fix: os.MkdirTemp($D, $P)
+  message: ioutil.TempDir is deprecated
+  languages: [go]
+  severity: ERROR
+- id: deprecated-ioutil-tempfile
+  pattern: ioutil.TempFile($D, $P)
+  fix: os.CreateTemp($D, $P)
+  message: ioutil.TempFile is deprecated
+  languages: [go]
+  severity: ERROR
+- id: deprecated-ioutil-writefile
+  pattern: ioutil.WriteFile($F, $D, $P)
+  fix: os.WriteFile($F, $D, $P)
+  message: ioutil.WriteFile is deprecated
+  languages: [go]
+  severity: ERROR
