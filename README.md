@@ -25,7 +25,7 @@ $ semgrep -f path/to/semgrep-go/ .
 To run all the ruleguard rules:
 
 ```
-$ ruleguard -c=0 -rules path/to/semgrep-go/ruleguard.rules.go .
+$ ruleguard -c=0 -rules path/to/semgrep-go/ruleguard.rules.go ./...
 ```
 
 
