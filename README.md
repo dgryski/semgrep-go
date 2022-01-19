@@ -57,6 +57,7 @@ Semgrep checks:
 * close-sql-query-rows: find places database/sql.Rows instance isn't Close()d
 * unixnano: check for time.Time comparisons using UnixNano()
 * timeafter: leaky use of time.After()
+* contextCancelable: checks for cancelable contexts not systematically canceled
 
 Ruleguard checks are in ruleguard.rules.go.
 * unconvert: check for unnecessary conversions
