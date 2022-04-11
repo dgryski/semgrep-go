@@ -1,9 +1,29 @@
 rules:
   - id: marshal-json-pointer-receiver
     patterns:
-            - pattern-either:
-                - pattern: func ($T *$TYPE) MarshalJSON() ($DATA []byte, $ERR error)
-                - pattern: func ($T *$TYPE) MarshalJSON() ([]byte, error)
+      - pattern-either:
+          - pattern: func ($T *$TYPE) MarshalJSON() ($DATA []byte, $ERR error)
+          - pattern: func ($T *$TYPE) MarshalJSON() ([]byte, error)
     message: "MarshalJSON with a pointer receiver has surprising results: https://github.com/golang/go/issues/22967"
+    languages: [go]
+    severity: ERROR
+
+  - id: marshal-json-misspell
+    pattern-either:
+      - patterns:
+          - pattern-regex: (?i)func \(.+\) marshal[l]?json\(
+          - pattern-not-regex: func \(.+\) MarshalJSON\(
+    message: |
+      Misspelling of MarshalJSON.
+    languages: [go]
+    severity: ERROR
+
+  - id: unmarshal-json-misspell
+    pattern-either:
+      - patterns:
+          - pattern-regex: (?i)func \(.+\) unmarshal[l]?json\(
+          - pattern-not-regex: func \(.+\) UnmarshalJSON\(
+    message: |
+      Misspelling of UnmarshalJSON.
     languages: [go]
     severity: ERROR
