@@ -12,7 +12,7 @@ rules:
           - pattern: $NET = fmt.Sprintf("%s:%s", ..., ...)
         - metavariable-regex:
             metavariable: '$NET'
-            regex: '(?i).*(port|addr|host|listen|bind|ip)'
+            regex: '((?i).*(port|addr|host|listen|bind))|((?i)^ip$)|(ip[A-Z0-9].*|.*(Ip)$|.*(Ip)[A-Z0-9].*)'
     - patterns:
       - pattern: fmt.Sprintf($XX, $NET)
       - metavariable-regex:
@@ -20,7 +20,7 @@ rules:
           regex: '"%s:[0-9]+"'
       - metavariable-regex:
           metavariable: '$NET'
-          regex: '(?i).*(port|addr|host|listen|bind|ip)'
+          regex: '((?i).*(port|addr|host|listen|bind))|((?i)^ip$)|(ip[A-Z0-9].*|.*(Ip)$|.*(Ip)[A-Z0-9].*)'
   message: |
     use net.JoinHostPort instead of fmt.Sprintf($XX, $NET)
   languages: [go]
