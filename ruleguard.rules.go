@@ -393,6 +393,12 @@ func writestring(m dsl.Matcher) {
 		Suggest("$w.Write($b)")
 }
 
+func fmtfprint(m dsl.Matcher) {
+	m.Match(`fmt.Fprint($w, string($b))`).
+		Where(m["b"].Type.Is("[]byte")).
+		Suggest("$w.Write($b)")
+}
+
 func badlock(m dsl.Matcher) {
 	// Shouldn't give many false positives without type filter
 	// as Lock+Unlock pairs in combination with defer gives us pretty
