@@ -1,3 +1,4 @@
+//go:build ignore
 // +build ignore
 
 package gorules
@@ -418,6 +419,16 @@ func badlock(m dsl.Matcher) {
 		Where(m["mu1"].Text == m["mu2"].Text).
 		At(m["mu2"]).
 		Report(`maybe defer $mu1.RUnlock() was intended?`)
+}
+
+func setenvUsedInTests(m dsl.Matcher) {
+	m.Match(
+		`os.Setenv($key, $val); defer os.Unsetenv($key)`,
+		`os.Setenv($key, $val); defer os.Setenv($key, "")`,
+	).
+		Where(m.File().Name.Matches("_test.go")).
+		Report(`should prefer t.Setenv within tests`).
+		Suggest(`t.Setenv($key, $val)`)
 }
 
 func contextTODO(m dsl.Matcher) {
