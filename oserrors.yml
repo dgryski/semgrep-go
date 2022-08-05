@@ -1,11 +1,28 @@
 rules:
-  - id: os-error-handling-functions
+  - id: os-error-is-exist
     patterns:
-            - pattern-either:
-                - pattern: os.IsExist(...)
-                - pattern: os.IsNotExist(...)
-                - pattern: os.IsPermission(...)
-                - pattern: os.IsTimeout(...)
+     - pattern: os.IsExist($ERR)
+    fix: errors.Is($ERR, fs.ErrExist)
+    message: "New code should use errors.Is with the appropriate error type"
+    languages: [go]
+    severity: ERROR
+  - id: os-error-is-not-exist
+    patterns:
+     - pattern: os.IsNotExist($ERR)
+    fix: errors.Is($ERR, fs.ErrNotExist)
+    message: "New code should use errors.Is with the appropriate error type"
+    languages: [go]
+    severity: ERROR
+  - id: os-error-is-permission
+    patterns:
+     - pattern: os.IsPermission($ERR)
+    fix: errors.Is($ERR, fs.ErrPermission)
+    message: "New code should use errors.Is with the appropriate error type"
+    languages: [go]
+    severity: ERROR
+  - id: os-error-is-timeout
+    patterns:
+     - pattern: os.IsTimeout(...)
     message: "New code should use errors.Is with the appropriate error type"
     languages: [go]
     severity: ERROR
