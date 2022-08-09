@@ -505,29 +505,27 @@ func ioutilWriteFile(m dsl.Matcher) {
 		Suggest(`os.WriteFile($f, $d, $p)`)
 }
 
-// io.Writer.Write([]byte(string)) => io.WriteString(io.Writer, string)
-func ioWriteString(m dsl.Matcher) {
+func ioWriterWriteMisues(m dsl.Matcher) {
+	// io.Writer.Write([]byte(string)) => io.WriteString(io.Writer, string)
 	m.Match(
 		`$w.Write([]byte($s))`
-	).Where(m["s"].Type.Is("string") && m["w"].Type.Implements("io.Writer") && !m["w"].Type.Implements("io.StringWriter")).
+	).Where(m["s"].Type.Is("string") && m["w"].Type.HasMethod("io.Writer.Write") && !m["w"].Type.HasMethod("io.StringWriter.WriteString")).
 		Report(`Use io.WriteString when writing a string to an io.Writer`).
 		Suggest(`io.WriteString($w, $s)`)
-}
 
-// interface{ io.Writer; io.StringWriter }.Write([]byte(string)) => interface{ io.Writer; io.StringWriter }.WriteString(string)
-func ioWriteStringOnStringWriter(m dsl.Matcher) {
+	// interface{ io.Writer; io.StringWriter }.Write([]byte(string)) => interface{ io.Writer; io.StringWriter }.WriteString(string)
 	m.Match(
 		`$w.Write([]byte($s))`
-	).Where(m["s"].Type.Is("string") && m["w"].Type.Implements("io.Writer") && m["w"].Type.Implements("io.StringWriter")).
+	).Where(m["s"].Type.Is("string") && m["w"].Type.HasMethod("io.Writer.Write") && m["w"].Type.HasMethod("io.StringWriter.WriteString")).
 		Report(`Use WriteString when writing a string to an io.StringWriter`).
 		Suggest(`$w.WriteString($s)`)
 }
 
-// interface{ io.Writer; io.StringWriter }.WriteString(string([]byte)) => interface{ io.Writer; io.StringWriter }.Write([]byte)
-func ioWriteStringBytesOnWriter(m dsl.Matcher) {
+func ioStringWriterWriteStringMisuse(m dsl.Matcher) {
+	// interface{ io.Writer; io.StringWriter }.WriteString(string([]byte)) => interface{ io.Writer; io.StringWriter }.Write([]byte)
 	m.Match(
 		`$w.WriteString(string($b))`
-	).Where(m["b"].Type.Is("[]byte") && m["w"].Type.Implements("io.Writer") && m["w"].Type.Implements("io.StringWriter")).
+	).Where(m["b"].Type.Is("[]byte") && m["w"].Type.HasMethod("io.Writer.Write") && m["w"].Type.HasMethod("io.StringWriter.WriteString")).
 		Report(`Use Write when writing a []byte to an io.Writer`).
 		Suggest(`$w.Write($b)`)
 }
