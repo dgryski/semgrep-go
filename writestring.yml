@@ -11,4 +11,9 @@ rules:
     message: "use $W.Write($VAR) instead of fmt.Fprint when $VAR is []byte"
     languages: [go]
     severity: ERROR
-
+  - id: use-write-not-fsprint
+    patterns:
+        - pattern: $W.Write([]byte(fmt.Sprintf($...VALS)))
+    message: "use fmt.Fprintf($W, $...VALS) instead of fmt.Sprintf and []byte conversion"
+    languages: [go]
+    severity: ERROR
