@@ -504,3 +504,30 @@ func ioutilWriteFile(m dsl.Matcher) {
 		Report(`As of Go 1.16, this function simply calls os.WriteFile.`).
 		Suggest(`os.WriteFile($f, $d, $p)`)
 }
+
+// io.Writer.Write([]byte(string)) => io.WriteString(io.Writer, string)
+func ioWriteString(m dsl.Matcher) {
+	m.Match(
+		`$w.Write([]byte($s))`
+	).Where(m["s"].Type.Is("string") && m["w"].Type.Implements("io.Writer") && !m["w"].Type.Implements("io.StringWriter")).
+		Report(`Use io.WriteString when writing a string to an io.Writer`).
+		Suggest(`io.WriteString($w, $s)`)
+}
+
+// interface{ io.Writer; io.StringWriter }.Write([]byte(string)) => interface{ io.Writer; io.StringWriter }.WriteString(string)
+func ioWriteStringOnStringWriter(m dsl.Matcher) {
+	m.Match(
+		`$w.Write([]byte($s))`
+	).Where(m["s"].Type.Is("string") && m["w"].Type.Implements("io.Writer") && m["w"].Type.Implements("io.StringWriter")).
+		Report(`Use WriteString when writing a string to an io.StringWriter`).
+		Suggest(`$w.WriteString($s)`)
+}
+
+// interface{ io.Writer; io.StringWriter }.WriteString(string([]byte)) => interface{ io.Writer; io.StringWriter }.Write([]byte)
+func ioWriteStringBytesOnWriter(m dsl.Matcher) {
+	m.Match(
+		`$w.WriteString(string($b))`
+	).Where(m["b"].Type.Is("[]byte") && m["w"].Type.Implements("io.Writer") && m["w"].Type.Implements("io.StringWriter")).
+		Report(`Use Write when writing a []byte to an io.Writer`).
+		Suggest(`$w.Write($b)`)
+}
