@@ -505,7 +505,7 @@ func ioutilWriteFile(m dsl.Matcher) {
 		Suggest(`os.WriteFile($f, $d, $p)`)
 }
 
-func ioWriterWriteMisues(m dsl.Matcher) {
+func ioWriterWriteMisuse(m dsl.Matcher) {
 	// io.Writer.Write([]byte(string)) => io.WriteString(io.Writer, string)
 	m.Match(
 		`$w.Write([]byte($s))`
