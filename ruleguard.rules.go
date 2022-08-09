@@ -515,7 +515,7 @@ func ioWriteString(m dsl.Matcher) {
 }
 
 // io.WriteString(io.Writer, string([]byte)) => io.Writer.Write([]byte)
-func ioWriteString(m dsl.Matcher) {
+func ioWriteStringBytes(m dsl.Matcher) {
 	m.Match(
 		`io.WriteString($w, string($b))`
 	).Where(m["b"].Type.Is("[]byte") && m["w"].Type.Implements("io.Writer")).
