@@ -514,6 +514,15 @@ func ioWriteString(m dsl.Matcher) {
 		Suggest(`io.WriteString($w, $s)`)
 }
 
+// io.WriteString(io.Writer, string([]byte)) => io.Writer.Write([]byte)
+func ioWriteString(m dsl.Matcher) {
+	m.Match(
+		`io.WriteString($w, string($b))`
+	).Where(m["b"].Type.Is("[]byte") && m["w"].Type.Implements("io.Writer")).
+		Report(`Use Write when writing a []byte to an io.Writer`).
+		Suggest(`$w.Write($b)`)
+}
+
 // interface{ io.Writer; io.StringWriter }.Write([]byte(string)) => interface{ io.Writer; io.StringWriter }.WriteString(string)
 func ioWriteStringOnStringWriter(m dsl.Matcher) {
 	m.Match(
