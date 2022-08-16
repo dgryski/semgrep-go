@@ -421,6 +421,16 @@ func badlock(m dsl.Matcher) {
 		Report(`maybe defer $mu1.RUnlock() was intended?`)
 }
 
+func setenvUsedInTests(m dsl.Matcher) {
+	m.Match(
+		`os.Setenv($key, $val); defer os.Unsetenv($key)`,
+		`os.Setenv($key, $val); defer os.Setenv($key, "")`,
+	).
+		Where(m.File().Name.Matches("_test.go")).
+		Report(`should prefer t.Setenv within tests`).
+		Suggest(`t.Setenv($key, $val)`)
+}
+
 func contextTODO(m dsl.Matcher) {
 	m.Match(`context.TODO()`).Report(`consider to use well-defined context`)
 }
