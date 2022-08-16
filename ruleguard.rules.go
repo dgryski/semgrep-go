@@ -1,3 +1,4 @@
+//go:build ignore
 // +build ignore
 
 package gorules
@@ -507,25 +508,22 @@ func ioutilWriteFile(m dsl.Matcher) {
 
 func ioWriterWriteMisuse(m dsl.Matcher) {
 	// io.Writer.Write([]byte(string)) => io.WriteString(io.Writer, string)
-	m.Match(
-		`$w.Write([]byte($s))`
-	).Where(m["s"].Type.Is("string") && m["w"].Type.HasMethod("io.Writer.Write") && !m["w"].Type.HasMethod("io.StringWriter.WriteString")).
+	m.Match(`$w.Write([]byte($s))`).
+		Where(m["s"].Type.Is("string") && m["w"].Type.HasMethod("io.Writer.Write") && !m["w"].Type.HasMethod("io.StringWriter.WriteString")).
 		Report(`Use io.WriteString when writing a string to an io.Writer`).
 		Suggest(`io.WriteString($w, $s)`)
 
 	// interface{ io.Writer; io.StringWriter }.Write([]byte(string)) => interface{ io.Writer; io.StringWriter }.WriteString(string)
-	m.Match(
-		`$w.Write([]byte($s))`
-	).Where(m["s"].Type.Is("string") && m["w"].Type.HasMethod("io.Writer.Write") && m["w"].Type.HasMethod("io.StringWriter.WriteString")).
+	m.Match(`$w.Write([]byte($s))`).
+		Where(m["s"].Type.Is("string") && m["w"].Type.HasMethod("io.Writer.Write") && m["w"].Type.HasMethod("io.StringWriter.WriteString")).
 		Report(`Use WriteString when writing a string to an io.StringWriter`).
 		Suggest(`$w.WriteString($s)`)
 }
 
 func ioStringWriterWriteStringMisuse(m dsl.Matcher) {
 	// interface{ io.Writer; io.StringWriter }.WriteString(string([]byte)) => interface{ io.Writer; io.StringWriter }.Write([]byte)
-	m.Match(
-		`$w.WriteString(string($b))`
-	).Where(m["b"].Type.Is("[]byte") && m["w"].Type.HasMethod("io.Writer.Write") && m["w"].Type.HasMethod("io.StringWriter.WriteString")).
+	m.Match(`$w.WriteString(string($b))`).
+		Where(m["b"].Type.Is("[]byte") && m["w"].Type.HasMethod("io.Writer.Write") && m["w"].Type.HasMethod("io.StringWriter.WriteString")).
 		Report(`Use Write when writing a []byte to an io.Writer`).
 		Suggest(`$w.Write($b)`)
 }
