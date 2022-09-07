@@ -1,0 +1,10 @@
+rules:
+  - id: http-request-go-context
+    patterns:
+    - pattern: |
+        $CTX := ($R : *http.Request).Context()
+        ...
+        go $F($CTX, ...)
+    message: "passing an http-request scoped Context to a goroutine"
+    languages: [go]
+    severity: ERROR
