@@ -1,7 +1,7 @@
 rules:
   - id: go-fuzz-to-native-fuzzing
     patterns:
-            - pattern: func Fuzz($DATA []byte) { $...BODY }
+            - pattern: func Fuzz($DATA []byte) int { $...BODY }
     fix: |
       // remove gofuzz build tag
       // rename file to _test.go
