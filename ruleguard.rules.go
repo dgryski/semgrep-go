@@ -182,17 +182,40 @@ func constswitch(m dsl.Matcher) {
 		Report("constant switch")
 }
 
+// oddcomparisons flags comparisons which all have simpler
+// equivalents with just $x and $y and no zero term
 func oddcomparisons(m dsl.Matcher) {
-	m.Match(
-		"$x - $y == 0",
-		"$x - $y != 0",
-		"$x - $y < 0",
-		"$x - $y <= 0",
-		"$x - $y > 0",
-		"$x - $y >= 0",
-		"$x ^ $y == 0",
-		"$x ^ $y != 0",
-	).Report("odd comparison")
+	m.Match("$x - $y == 0").
+		Report("odd comparison").
+		Suggest("$x == $y")
+
+	m.Match("$x - $y != 0").
+		Report("odd comparison").
+		Suggest("$x != $y")
+
+	m.Match("$x - $y < 0").
+		Report("odd comparison").
+		Suggest("$y > $x")
+
+	m.Match("$x - $y <= 0").
+		Report("odd comparison").
+		Suggest("$y >= $x")
+
+	m.Match("$x - $y > 0").
+		Report("odd comparison").
+		Suggest("$x > $y")
+
+	m.Match("$x - $y >= 0").
+		Report("odd comparison").
+		Suggest("$x >= $y")
+
+	m.Match("$x ^ $y == 0").
+		Report("odd comparison").
+		Suggest("$x == $y")
+
+	m.Match("$x ^ $y != 0").
+		Report("odd comparison").
+		Suggest("$x != $y")
 }
 
 func oddmathbits(m dsl.Matcher) {
