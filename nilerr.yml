@@ -1,5 +1,5 @@
 rules:
-  - id: return-nil
+  - id: return-nil-err
     patterns:
         - pattern-either:
               - pattern: |
