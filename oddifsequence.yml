@@ -20,6 +20,45 @@ rules:
           - pattern: |
                   if $X { return  ... }
                   for $X { ... }
+
+          - pattern: |
+                  if $X { break }
+                  if $X { ... }
+          - pattern: |
+                  if ! $X { break }
+                  if $X { ... }
+          - pattern: |
+                  if $X { break }
+                  if ! $X { ... }
+          - pattern: |
+                  if $X == $Y { break }
+                  if $X != $Y { ... }
+          - pattern: |
+                  if $X != $Y { break }
+                  if $X == $Y { ... }
+          - pattern: |
+                  if $X { break }
+                  for $X { ... }
+
+          - pattern: |
+                  if $X { continue }
+                  if $X { ... }
+          - pattern: |
+                  if ! $X { continue }
+                  if $X { ... }
+          - pattern: |
+                  if $X { continue }
+                  if ! $X { ... }
+          - pattern: |
+                  if $X == $Y { continue }
+                  if $X != $Y { ... }
+          - pattern: |
+                  if $X != $Y { continue }
+                  if $X == $Y { ... }
+          - pattern: |
+                  if $X { continue }
+                  for $X { ... }
+
           - pattern: |
                   if $X {
                           if $X { ... }
