@@ -1,15 +1,59 @@
+# flag these odd comparisons as they all have simpler
+# equivalents with just $X and $Y and no zero term
 rules:
-  - id: odd-comparison
+  - id: odd-comparison-subtract-eq-zero
     patterns:
-        - pattern-either:
-              - pattern: $X - $Y == 0
-              - pattern: $X - $Y != 0
-              - pattern: $X - $Y < 0
-              - pattern: $X - $Y <= 0
-              - pattern: $X - $Y > 0
-              - pattern: $X - $Y >= 0
-              - pattern: $X ^ $Y == 0
-              - pattern: $X ^ $Y != 0
+      - pattern: $X - $Y == 0
+    fix: $X == $Y
+    message: "Odd comparison"
+    languages: [go]
+    severity: ERROR
+  - id: odd-comparison-subtract-neq-zero
+    patterns:
+      - pattern: $X - $Y != 0
+    fix: $X != $Y
+    message: "Odd comparison"
+    languages: [go]
+    severity: ERROR
+  - id: odd-comparison-subtract-lt-zero
+    patterns:
+      - pattern: $X - $Y < 0
+    fix: $Y > $X
+    message: "Odd comparison"
+    languages: [go]
+    severity: ERROR
+  - id: odd-comparison-subtract-lte-zero
+    patterns:
+      - pattern: $X - $Y <= 0
+    fix: $Y >= $X
+    message: "Odd comparison"
+    languages: [go]
+    severity: ERROR
+  - id: odd-comparison-subtract-gt-zero
+    patterns:
+      - pattern: $X - $Y > 0
+    fix: $X > $Y
+    message: "Odd comparison"
+    languages: [go]
+    severity: ERROR
+  - id: odd-comparison-subtract-gte-zero
+    patterns:
+      - pattern: $X - $Y >= 0
+    fix: $X >= $Y
+    message: "Odd comparison"
+    languages: [go]
+    severity: ERROR
+  - id: odd-comparison-xor-eq-zero
+    patterns:
+      - pattern: $X ^ $Y == 0
+    fix: $X == $Y
+    message: "Odd comparison"
+    languages: [go]
+    severity: ERROR
+  - id: odd-comparison-xor-neq-zero
+    patterns:
+      - pattern: $X ^ $Y != 0
+    fix: $X != $Y
     message: "Odd comparison"
     languages: [go]
     severity: ERROR
