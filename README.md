@@ -22,6 +22,11 @@ To run all semgrep rules:
 $ semgrep -f path/to/semgrep-go/ .
 ```
 
+To run all semgrep rules via registry:
+```
+$ semgrep --config=p/semgrep-go-correctness
+```
+
 To run all the ruleguard rules:
 
 ```
