@@ -1,0 +1,9 @@
+rules:
+  - id: net-ip-req-remoteaddr
+    patterns:
+          - pattern: net.IP($R.RemoteAddr)
+    message: "Converting RemoteAddr to net.IP is probably wrong"
+    fix: net.ParseIP($R.RemoteAddr)
+
+    languages: [go]
+    severity: ERROR
