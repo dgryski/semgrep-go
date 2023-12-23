@@ -560,3 +560,10 @@ func ioStringWriterWriteStringMisuse(m dsl.Matcher) {
 		Report(`Use Write when writing a []byte to an io.Writer`).
 		Suggest(`$w.Write($b)`)
 }
+
+func randSeed(m dsl.Matcher) {
+	m.Match(
+		`rand.Seed($s)`,
+	).Report(`As of Go 1.20, the math.Seed func is deprecated as programs should not use the global default source.`).
+		Suggest(`rand.New(rand.NewSource($s))`)
+}
