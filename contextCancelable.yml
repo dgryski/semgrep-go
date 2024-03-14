@@ -10,6 +10,9 @@ rules:
           $_, $X := context.$CANCELABLE(...)
           ...
           $X()
+      - pattern-not-inside: |
+          $_, $X := context.$CANCELABLE(...)
+          t.Cleanup($X)
       - metavariable-regex:
           metavariable: '$CANCELABLE'
           regex: '(WithDeadline|WithTimeout)'    
