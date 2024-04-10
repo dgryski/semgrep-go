@@ -12,6 +12,7 @@ rules:
           $X()
       - pattern-not-inside: |
           $_, $X := context.$CANCELABLE(...)
+          ...
           t.Cleanup($X)
       - metavariable-regex:
           metavariable: '$CANCELABLE'
