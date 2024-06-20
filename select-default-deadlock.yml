@@ -1,0 +1,14 @@
+rules:
+- id: ctx-done-and-default-deadlock
+  patterns:
+    - pattern-either: 
+      - pattern: |
+          select {
+          case <-ctx.Done():
+              $BODY
+          default:
+              ... <- ...
+          }
+  message: "ctx.Done() and send to channel in default can cause a potential deadlock"
+  languages: [go]
+  severity: ERROR
