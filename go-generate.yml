@@ -1,0 +1,16 @@
+# go generate directives
+#
+# the comment must start at the beginning of the line and have no spaces between the // and the go:generate
+rules:
+  - id: go-generate-must-not-be-indented
+    message: any //go:generate comment must appear at the start of a line
+    severity: ERROR
+    languages: [go]
+    patterns:
+      - pattern-regex: ".//go:generate"
+  - id: go-generate-must-not-have-space-after-comment
+    message: the go:generate directive must have no spaces between the // and go:generate
+    severity: ERROR
+    languages: [go]
+    patterns:
+      - pattern-regex: "//\\s+go:generate"
