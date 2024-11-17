@@ -560,3 +560,19 @@ func ioStringWriterWriteStringMisuse(m dsl.Matcher) {
 		Report(`Use Write when writing a []byte to an io.Writer`).
 		Suggest(`$w.Write($b)`)
 }
+
+func lenStrByteSlice(m dsl.Matcher) {
+	// len(string([]byte)) -> len([]byte)
+	m.Match(`len(string($b))`).
+		Where(m["b"].Type.Underlying().Is("[]byte")).
+		Report(`Call len() on the byte slice instead of converting to a string first`).
+		Suggest(`len($b)`)
+}
+
+func lenByteSliceStr(m dsl.Matcher) {
+	// len([]byte(string)) -> len(string)
+	m.Match(`len([]byte($s))`).
+		Where(m["s"].Type.Underlying().Is("string")).
+		Report(`Call len() on the string instead of converting to []byte first.`).
+		Suggest(`len($s)`)
+}
